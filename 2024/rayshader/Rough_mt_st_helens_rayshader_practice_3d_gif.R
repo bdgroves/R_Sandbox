@@ -136,11 +136,12 @@ waterdepths <- transition_values(from = 0, to = min(elmat), steps = n_frames)
 thetas <- transition_values(from = -45, to = -135, steps = n_frames)
 # generate gif
 zscale <- 50
+
 elmat %>% 
   sphere_shade(texture = "imhof1", zscale = zscale) %>%
-  add_shadow(ambient_shade(montereybay, zscale = zscale), 0.5) %>%
-  add_shadow(ray_shade(montereybay, zscale = zscale, lambert = TRUE), 0.5) %>%
-  save_3d_gif(montereybay, file = "elmat.gif", duration = 6,
+  add_shadow(ambient_shade(elmat, zscale = zscale), 0.5) %>%
+  add_shadow(ray_shade(elmat, zscale = zscale, lambert = TRUE), 0.5) %>%
+  save_3d_gif(elmat, file = "elmat.gif", duration = 6,
               solid = TRUE, shadow = TRUE, water = TRUE, zscale = zscale,
               watercolor = "imhof3", wateralpha = 0.8, 
               waterlinecolor = "#ffffff", waterlinealpha = 0.5,
