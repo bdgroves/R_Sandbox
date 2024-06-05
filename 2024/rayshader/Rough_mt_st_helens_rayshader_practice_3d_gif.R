@@ -21,13 +21,19 @@ rgl::open3d()
 # Plot the raster with rayshader
 elmat <- raster_to_matrix(r)
 
+#elmat %>%
+#  plot_3d(elmat, windowsize = c(1100,900), zscale = 15, shadowdepth = -50,
+    #    zoom=0.5, phi=45,theta=-45,fov=70, background = "#F2E1D0", shadowcolor = "#523E2B")
+#render_snapshot(title_text = "Test",
+         #       title_bar_color = "#1f5214", title_color = "white", title_bar_alpha = 1)
+
 elmat %>%
   sphere_shade(texture = "imhof1") %>%
   add_water(detect_water(elmat), color = "lightblue") %>%
-  add_shadow(cloud_shade(elmat, zscale = 10, start_altitude = 500, end_altitude = 1000,), 0) %>%
-  plot_3d(elmat, zscale = 10, fov = 0, theta = 135, zoom = 0.75, phi = 45, windowsize = c(1000, 800),
+  add_shadow(cloud_shade(elmat, zscale = 10, start_altitude = 50, end_altitude = 1000,), 0) %>%
+  plot_3d(elmat, zscale = 10, fov = 0, theta = 135, zoom = 0.5, phi = 45, windowsize = c(1000, 800),
           background="black")
-render_camera(theta = 20, phi=40,zoom= 0.64, fov= 56 )
+render_camera(theta = 20, phi=40,zoom= 0.5, fov= 56 )
 
 save_3d_gif <- function(hillshade, heightmap, file, duration = 5, ...) {
   require(rayshader)
@@ -86,25 +92,7 @@ plot_3d_tidy_eval <- function(hillshade, ...) {
 }
 
 
-#' Create a numeric vector of transition values.
-#' @description This function helps generate a sequence 
-#' of numeric values to transition "from" a start point
-#' "to" some end point. The transition can be "one_way" 
-#' (meaning it ends at the "to" point) or "two_way" (meaning
-#' we return back to end at the "from" point).
-#'
-#' @param from starting point for transition values
-#' @param to ending point (for one-way transitions) or turn-around point 
-#'           (for two-way transitions)
-#' @param steps the number of steps to take in the transation (i.e. the length
-#'              of the returned vector)
-#' @param one_way logical value to determine if we should stop at the "to" value
-#'                (TRUE) or turn around and return to the "from" value (FALSE)
-#' @param type string defining the transition type - currently suppoerts "cos"
-#'             (for a cosine curve) and "lin" (for linear steps)
-#'
-#' @return a numeric vector of transition values
-#' 
+
 transition_values <- function(from, to, steps = 10, 
                               one_way = FALSE, type = "cos") {
   if (!(type %in% c("cos", "lin")))
