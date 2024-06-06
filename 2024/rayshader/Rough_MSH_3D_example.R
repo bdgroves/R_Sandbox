@@ -342,6 +342,3 @@ elev_matrix %>%
               zscale = zscale, windowsize = c(1200, 1000), wateralpha = 0,
               water = TRUE, soliddepth = -max(elev_matrix)/zscale, 
               theta = theta, phi = phi, zoom = zoom, fov = 60)
-# add label
-render_label(elev_matrix, x = label$pos$x, y = label$pos$y, z = 500, 
-             zscale = zscale, text = label$text, textsize = 2, linewidth = 5)
