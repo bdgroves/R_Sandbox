@@ -4,7 +4,7 @@ mapboxgl()
 
 mapboxgl(
   style = mapbox_style("satellite"),
-  projection = "winkelTripel")
+  projection = "mercator")
 
 mapboxgl(
   center = c(-97.6, 25.4)
