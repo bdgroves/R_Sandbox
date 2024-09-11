@@ -117,6 +117,31 @@ species_summary <- all_rattlers %>%
 # Display the summary
 print(species_summary)
 
+# Summarize the count of occurrences for each species
+species_summary <- rattlesnakes_data %>%
+  group_by(name) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  arrange(desc(count))
+
+# Display the summary
+print(species_summary)
+
+
 # Optionally, save the summary to a CSV file
 write.csv(species_summary, "rattlesnake_species_summary.csv", row.names = FALSE)
 
+library(dplyr)
+library(stringr)
+
+# Modify the 'name' column to keep only the genus and species (first two words)
+rattlesnakes_data_clean <- rattlesnakes_data %>%
+  mutate(name = str_extract(name, "^[A-Za-z]+\\s[A-Za-z]+"))
+
+# Summarize the count of occurrences for each species
+species_summary_clean <- rattlesnakes_data_clean %>%
+  group_by(name) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  arrange(desc(count))
+
+# Optionally, save the summary to a CSV file
+write.csv(species_summary_clean, "rattlesnake_species_summary_clean.csv", row.names = FALSE)
