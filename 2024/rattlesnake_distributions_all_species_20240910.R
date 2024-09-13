@@ -145,3 +145,24 @@ species_summary_clean <- rattlesnakes_data_clean %>%
 
 # Optionally, save the summary to a CSV file
 write.csv(species_summary_clean, "rattlesnake_species_summary_clean.csv", row.names = FALSE)
+
+# Remove rows with NA values in any of the columns
+rattlesnakes_data_clean <- rattlesnakes_data_clean %>%
+  drop_na()
+
+# Remove rows with NA values in specific columns (name, longitude, latitude)
+rattlesnakes_data_clean <- rattlesnakes_data_clean %>%
+  drop_na(name, longitude, latitude)
+
+# Save the cleaned data to a CSV file
+write.csv(rattlesnakes_data_clean, "rattlesnakes_data_clean.csv", row.names = FALSE)
+
+# Load the sf library to handle spatial data
+library(sf)
+
+# Convert the cleaned data to an sf object (assumes the data has latitude and longitude)
+rattlesnakes_sf <- st_as_sf(rattlesnakes_data_clean, coords = c("longitude", "latitude"), crs = 4326)
+
+# Save the sf object as a GeoJSON file
+st_write(rattlesnakes_sf, "rattlesnakes_data_clean.geojson", delete_dsn = TRUE)
+
